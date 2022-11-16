@@ -226,7 +226,7 @@ jobs:
               then  
                 echo "1" > ~/mig.txt
               fi  
-     - save_cache:
+      - save_cache:
           paths: 
             - mig.txt
           key: migration           
