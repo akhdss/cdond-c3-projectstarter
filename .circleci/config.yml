@@ -174,29 +174,38 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+      - run: 
+          name: printing inventory file
+          command: cat .circleci/ansible/inventory.txt
       - destroy-environment:
           id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
       - destroy-environment:
           id: "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"   
 
-  # configure-infrastructure:
-  #   docker:
-  #     # Docker image here that supports Ansible
-  #   steps:
-  #     # Checkout code from git
-  #     # Add ssh keys with fingerprint
-  #     # attach workspace
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # Your code here
-  #           exit 1
-  #     - run:
-  #         name: Configure server
-  #         command: |
-  #           # Your code here
-  #           exit 1
-  #     # Here's where you will add some code to rollback on failure      
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - add_ssh_keys:
+          fingerprints: ["2e:0a:d8:7a:c4:73:53:ee:a2:86:1d:b6:a0:c5:db:cb"] # You can get this ID in the section where you registered the SSH Key
+      - run:
+          name: Install dependencies
+          command: |
+            # install the dependencies needed for your playbook
+            apk add --update ansible 
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt main4.yml
+      # Here's where you will add some code to rollback on failure 
+      - destroy-environment:
+          id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy-environment:
+          id: "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"   
+     
 
   # run-migrations:
   #   docker:
