@@ -224,12 +224,12 @@ jobs:
           command: |   
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then  
-                echo "1" > /home/circleci/mig.txt
+                echo "1" > ~/mig.txt
               fi  
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - /home/circleci/mig.txt              
+     - save_cache:
+          paths: 
+            - mig.txt
+          key: migration           
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
