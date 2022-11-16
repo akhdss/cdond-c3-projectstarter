@@ -11,9 +11,9 @@
     upgrade: yes
 
 - name: remove dependencies that are no longer required
- become: yes
- apt:
-   autoremove: yes
+  become: yes
+  apt:
+    autoremove: yes
 
 - name: "install nodejs"
   become: yes
