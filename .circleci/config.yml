@@ -224,7 +224,7 @@ jobs:
           command: |   
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then  
-                echo "1" > ~/mig.txt
+                echo "1" > mig.txt
               fi  
       - persist_to_workspace:
           root: ~/
