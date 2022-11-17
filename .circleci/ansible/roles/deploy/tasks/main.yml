@@ -1,0 +1,32 @@
+---
+- name: "ceating ~/wed directory"
+  file: 
+    path: ~/web
+    state: directory
+
+- name: "Extract backend files"
+  unarchive: 
+    src: artifact.tar.gz
+    dest: ~/web
+
+- name: "install npm packages"
+  shell: |
+    cd ~/web
+    npm install
+
+- name: 'executing node'
+  become: yes
+  shell: |
+    cd ~/web/dist
+    pm2 stop default
+    pm2 start main.js
+  register: execute_node
+
+- name: "print execute_node"
+  debug: 
+    msg: "{{execute_node.stdout_lines}}"
+
+- name: "configure pm2 to start as service"
+  become: true 
+  shell: |
+    env PATH=$PATH:/usr/local/bin pm2 stratup systemd -u ubuntu --hp /home/ubuntu    
