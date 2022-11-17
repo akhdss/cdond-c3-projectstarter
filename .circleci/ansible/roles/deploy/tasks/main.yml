@@ -6,7 +6,7 @@
 
 - name: "Extract backend files"
   unarchive: 
-    src: artifact.tar.gz
+    src: .circleci/artifact.tar.gz
     dest: ~/web
 
 - name: "install npm packages"
