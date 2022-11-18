@@ -19,8 +19,7 @@
   shell: |
     cd ~/web
     pm2 stop default
-    cd dist
-    pm2 start main.js
+    pm2 start npm --name web -- start
   register: execute_node
 
 - name: "print execute_node"
