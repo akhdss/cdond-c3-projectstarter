@@ -18,6 +18,7 @@
   become: yes
   shell: |
     cd ~/web
+    pm2 kill
     pm2 stop default
     pm2 start npm --name web -- start
   register: execute_node
@@ -32,4 +33,3 @@
     pm2 startup
     env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
     pm2 save 
-    reboot
