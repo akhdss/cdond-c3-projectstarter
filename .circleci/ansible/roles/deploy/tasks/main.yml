@@ -29,4 +29,4 @@
 # - name: "configure pm2 to start as service"
 #   become: true 
 #   shell: |
-#     env PATH=$PATH:/usr/local/bin pm2 stratup systemd -u ubuntu --hp /home/ubuntu    
+#     env PATH=$PATH:/usr/local/bin pm2 stratup ubuntu -u ubuntu --hp /home/ubuntu    
