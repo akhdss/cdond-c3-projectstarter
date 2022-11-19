@@ -29,7 +29,7 @@
 - name: "configure pm2 to start as service"
   become: true 
   shell: |
-    pm2 kill'
+    pm2 kill
     cd ~/web
     pm2 start npm --name web -- start
     pm2 startup systemd
