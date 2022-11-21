@@ -14,9 +14,9 @@
     cd ~/web
     npm install
 
- - name: Remove all apps from PM2 manager
-    command: pm2 delete all
-    ignore_errors: yes
+- name: Remove all apps from PM2 manager
+  command: pm2 delete all
+  ignore_errors: yes
 
 - name: "configure pm2 to start as service"
   become: true 
