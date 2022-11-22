@@ -14,29 +14,31 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            aws s3 rm 's3://udable-<<parameter.id>>' --recursive
+            aws s3 rm 's3://udable-<<parameters.id>>' --recursive
             aws cloudformation delete-stack --stack-name "udapeople-backend-<<parameters.id>>"
             aws cloudformation delete-stack --stack-name "udapeople-frontend-<<parameters.id>>"
 
   revert-migrations:
-    description: Revert the last migration if successfully run in the current workflow.
-    parameters:
-      # Add parameter here     
+    description: Revert the last migration    
     steps:
+      - restore_cache:
+        keys: 
+          -  migration
       - run:
           name: Revert migrations
-          # Add when this will run
+          when: on_fail
           command: |
-            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = 1
-            if(( $SUCCESS==1 )); 
+            cat mig.text
+            SUCCESS=$(cat mig.txt)
+            # Logic for reverting the database state
+            if (( $SUCCESS == 1 ));
             then
-            #  cd ~/project/backend
-            #  npm install
-            #  Add revert code here. You can find this in the Getting Started section.
-              exit 1
-            fi
-            
+              echo 'done'
+              cd ~/project/backend
+              npm install
+              npm run migration:revert
+            fi            
+
 jobs:
   build-frontend:
     docker:
@@ -344,7 +346,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if curl ${API_URL} | grep "ok"
+            if curl $API_URL | grep "ok"
             then
                 return 0
             else
@@ -365,8 +367,7 @@ jobs:
   #     # Here's where you will add some code to rollback on failure  
       - destroy-environment:
           id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
-      - destroy-environment:
-          id: "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"  
+      - revert-migrations
 
   # cloudfront-update:
   #   docker:
