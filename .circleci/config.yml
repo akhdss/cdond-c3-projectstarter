@@ -224,7 +224,7 @@ jobs:
               then  
                 echo "1" > mig.txt
               fi  
-              which mig.txt
+              whereis mig.txt
               pwd
       - persist_to_workspace:
           root: ~/
