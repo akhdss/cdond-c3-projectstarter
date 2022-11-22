@@ -23,7 +23,7 @@ commands:
     steps:
       - restore_cache:
         keys: 
-          -  migration
+          - migration
       - run:
           name: Revert migrations
           when: on_fail
@@ -343,10 +343,11 @@ jobs:
             --output text)
             export API_URL="http://${BACKEND_IP}:3030/api/status"
             echo "${API_URL}"
+            curl
       - run:
           name: Backend smoke test.
           command: |
-            if curl $API_URL | grep "ok"
+            if curl '$API_URL' | grep "ok"
             then
                 return 0
             else
