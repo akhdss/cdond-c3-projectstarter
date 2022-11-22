@@ -21,9 +21,8 @@ commands:
   revert-migrations:
     description: Revert the last migration    
     steps:
-      - restore_cache:
-          keys: 
-            - migration
+      - attach_workspace:
+          at: ~/
       - run:
           name: Revert migrations
           when: on_fail
@@ -225,10 +224,12 @@ jobs:
               then  
                 echo "1" > mig.txt
               fi  
-      - save_cache:
+              which mig.txt
+              pwd
+      - persist_to_workspace:
+          root: ~/
           paths: 
-            - mig.txt
-          key: migration           
+            - mig.txt 
       # Here's where you will add some code to rollback on failure      
       - destroy-environment
 
@@ -341,7 +342,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if curl ${API_URL} | grep "ok"
+            if curl -s ${API_URL} | grep "ok"
             then
                 return 0
             else
