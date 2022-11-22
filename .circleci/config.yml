@@ -6,17 +6,17 @@ orbs:
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      id: 
-        type: string   
+    # parameters:
+    #   id: 
+    #     type: string   
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            aws s3 rm 's3://udable-<<parameters.id>>' --recursive
-            aws cloudformation delete-stack --stack-name "udapeople-backend-<<parameters.id>>"
-            aws cloudformation delete-stack --stack-name "udapeople-frontend-<<parameters.id>>"
+            aws s3 rm 's3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}' --recursive
+            aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+            aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
 
   revert-migrations:
     description: Revert the last migration    
@@ -227,7 +227,7 @@ jobs:
           command: |   
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then  
-                echo "1" > ~/mig.txt
+                echo "1" > mig.txt
               fi  
       - save_cache:
           paths: 
@@ -347,7 +347,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if curl '$API_URL' | grep "ok"
+            if curl '${API_URL}' | grep "ok"
             then
                 return 0
             else
@@ -366,8 +366,7 @@ jobs:
               return 1
             fi
   #     # Here's where you will add some code to rollback on failure  
-      - destroy-environment:
-          id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy-environment
       - revert-migrations
 
   # cloudfront-update:
