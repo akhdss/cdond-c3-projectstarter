@@ -234,10 +234,7 @@ jobs:
             - mig.txt
           key: migration           
       # Here's where you will add some code to rollback on failure      
-      - destroy-environment:
-          id: "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
-      - destroy-environment:
-          id: "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"   
+      - destroy-environment
 
   deploy-frontend:
     docker:
