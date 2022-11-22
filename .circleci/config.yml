@@ -22,13 +22,13 @@ commands:
     description: Revert the last migration    
     steps:
       - restore_cache:
-        keys: 
-          - migration
+          keys: 
+            - migration
       - run:
           name: Revert migrations
           when: on_fail
           command: |
-            cat mig.text
+            cat mig.txt
             SUCCESS=$(cat mig.txt)
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
