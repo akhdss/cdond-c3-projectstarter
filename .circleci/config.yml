@@ -222,6 +222,7 @@ jobs:
           command: |   
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then  
+                mkdir -p workspace
                 echo "1" > workspace/mig.txt
               fi  
               realpath mig.txt  
