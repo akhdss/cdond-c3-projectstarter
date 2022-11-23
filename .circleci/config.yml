@@ -232,6 +232,7 @@ jobs:
               realpath mig.txt  
               pwd
       - persist_to_workspace:
+          when: $(grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt)
           root: .
           paths:
             - workspace/mig.txt
