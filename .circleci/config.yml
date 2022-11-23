@@ -221,7 +221,8 @@ jobs:
             npm run migrations > migrations_dump.txt
       - run:
           name: making the file of migration num
-          command: |   
+          command: | 
+              cat ~/project/backend/migrations_dump.txt
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then  
                 mkdir -p workspace
