@@ -228,7 +228,7 @@ jobs:
               fi  
               realpath mig.txt  
               pwd
-       - save_cache:
+      - save_cache:
           paths: 
             - /home/circleci/project/mig.txt
           key: migration
