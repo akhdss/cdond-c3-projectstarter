@@ -224,6 +224,8 @@ jobs:
           name: making the file of migration num
           command: | 
               cat ~/project/backend/migrations_dump.txt
+              mkdir -p workspace
+              touch workspace/mig.txt
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then  
                 mkdir -p workspace
@@ -232,7 +234,6 @@ jobs:
               realpath mig.txt  
               pwd
       - persist_to_workspace:
-          when: $(grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt)
           root: .
           paths:
             - workspace/mig.txt
