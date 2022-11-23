@@ -228,7 +228,7 @@ jobs:
               then  
                 echo "1" > ~/workspace/mig.txt
               fi  
-              realpath mig.txt  
+              realpathfind $(pwd) -name mig.txt  
               pwd
       - persist_to_workspace:
           root: ~/
