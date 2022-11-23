@@ -29,7 +29,7 @@ commands:
           when: on_fail
           command: |
             cat mig.txt
-            SUCCESS=$(cat mig.txt)
+            SUCCESS=$(cat /home/circleci/project/workspace/mig.txt)
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
@@ -230,7 +230,7 @@ jobs:
               pwd
       - save_cache:
           paths: 
-            - /home/circleci/project/mig.txt
+            - /home/circleci/project/workspace/mig.txt
           key: migration
       # Here's where you will add some code to rollback on failure      
       - destroy-environment
