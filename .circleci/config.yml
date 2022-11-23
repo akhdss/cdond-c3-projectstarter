@@ -29,7 +29,7 @@ commands:
           command: |
             pwd
             ls -a
-            SUCCESS=$(cat workspace/mig.txt)
+            SUCCESS=$(cat ~/workspace/mig.txt)
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
