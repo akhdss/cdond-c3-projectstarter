@@ -338,12 +338,12 @@ jobs:
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text)
             export API_URL="http://${BACKEND_IP}:3030/api/status"
-            export CURL=curl "$API_URL" | grep "ok"
+            export CURL=$(curl "$API_URL")
             echo $CURL
       - run:
           name: Backend smoke test.
           command: |
-            if [[ "$CURL" = "ok" ]];
+            if [[ $(echo "$CURL" | grep "ok") = "ok" ]];
             then
                 return 0
             else
