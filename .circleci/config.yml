@@ -345,7 +345,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if (( $UU == "ok" ));
+            if (( $UU -eq "ok" ));
             then
                 return 0
             else
