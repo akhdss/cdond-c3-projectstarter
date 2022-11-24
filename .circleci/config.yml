@@ -23,7 +23,7 @@ commands:
     steps:
       - restore_cache:
           keys: 
-            - migration
+            - migration-${CIRCLE_WORKFLOW_ID:0:7}
       - run:
           name: Revert migrations
           when: on_fail
@@ -233,7 +233,7 @@ jobs:
       - save_cache:
           paths: 
             - ~/mig.txt
-          key: migration
+          key: migration-${CIRCLE_WORKFLOW_ID:0:7}
       # Here's where you will add some code to rollback on failure      
       - destroy-environment
 
@@ -346,7 +346,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if echo "$API_URL" | grep -o "ok";
+            if echo "$API_URL";
             then
                 return 0
             else
