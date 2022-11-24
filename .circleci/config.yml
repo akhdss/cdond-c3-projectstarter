@@ -343,7 +343,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if [[ $(echo "$CURL" | grep "ok") = "ok" ]];
+            if echo "$CURL" | grep "ok";
             then
                 return 0
             else
