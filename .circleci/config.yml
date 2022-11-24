@@ -21,8 +21,9 @@ commands:
   revert-migrations:
     description: Revert the last migration    
     steps:
-      - attach_workspace:
-          at: ~/
+      - restore_cache:
+          keys: 
+            - migration
       - run:
           name: Revert migrations
           when: on_fail
@@ -229,10 +230,10 @@ jobs:
               fi  
               pwd
               cat ~/mig.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - mig.txt
+      - save_cache:
+          paths: 
+            - ~/mig.txt
+          key: migration
       # Here's where you will add some code to rollback on failure      
       - destroy-environment
 
