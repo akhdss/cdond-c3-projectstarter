@@ -32,7 +32,7 @@ Resources:
           TargetOriginId: webpage
           ViewerProtocolPolicy: allow-all
 
-outputs: 
+Outputs: 
   WorkflowID:
     Value: !Sub ${WorkflowID}
     Description: URL for website hosted on S3
