@@ -414,7 +414,7 @@ jobs:
                 aws cloudformation delete-stack --stack-name udapeople-frontend-$(cat ~/OldWorkflowID.txt)
               fi  
             else
-                return 0
+              exit 0
             fi    
 
 workflows:
