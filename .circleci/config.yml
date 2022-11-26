@@ -407,9 +407,9 @@ jobs:
           command: |
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != $(cat ~/OldWorkflowID.txt) ]]
             then
-              aws s3 rm s3://udapeople-${OldWorkflowID} --recursive
-              aws cloudformation delete-stack --stack-name udapeople-backend-${OldWorkflowID}
-              aws cloudformation delete-stack --stack-name udapeople-frontend-${OldWorkflowID}
+              aws s3 rm s3://udapeople-$(cat ~/OldWorkflowID.txt) --recursive
+              aws cloudformation delete-stack --stack-name udapeople-backend-$(cat ~/OldWorkflowID.txt)
+              aws cloudformation delete-stack --stack-name udapeople-frontend-$(cat ~/OldWorkflowID.txt)
             fi
               
 
