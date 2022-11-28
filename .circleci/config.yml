@@ -179,6 +179,7 @@ jobs:
           name: printing inventory file
           command: cat .circleci/ansible/inventory.txt
       - destroy-environment 
+      - revert-migrations
 
   configure-infrastructure:
     docker:
@@ -199,7 +200,8 @@ jobs:
           command: |
             ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure 
-      - destroy-environment  
+      - destroy-environment 
+      - revert-migrations  
      
 
   run-migrations:
@@ -225,7 +227,8 @@ jobs:
               fi
               
       # Here's where you will add some code to rollback on failure      
-      - destroy-environment
+      - destroy-environment 
+      - revert-migrations
 
   deploy-frontend:
     docker:
@@ -260,7 +263,9 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
   #     # Here's where you will add some code to rollback on failure      
-                    
+      - destroy-environment 
+      - revert-migrations
+              
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11
@@ -308,6 +313,8 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
 
       # Here's where you will add some code to rollback on failure  
+      - destroy-environment 
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -384,7 +391,9 @@ jobs:
             --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
             --tags project=udapeople
       # Here's where you will add some code to rollback on failure  
-
+      - destroy-environment 
+      - revert-migrations
+      
   cleanup:
     docker:
       - image: amazon/aws-cli

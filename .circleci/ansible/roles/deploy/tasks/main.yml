@@ -27,7 +27,7 @@
 - name: Start the PM2 apps
   shell: |
     cd ~/web 
-    pm2 start npm --name=web -- start  
+    pm2 start npm --name=web -- start:prod  
 
 - name: 'Save PM2 configuration'
   become: yes
