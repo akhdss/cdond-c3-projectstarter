@@ -13,7 +13,8 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "build:prod": "webpack -p --progress --colors",
     "build": "webpack --mode development --progress --colors",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "resolve": "npx npm-force-resolutions"
   },
   "license": "MIT",
   "devDependencies": {
@@ -105,6 +106,9 @@
     "redux-actions": "^2.6.5",
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^8.13.4"
+  },
+  "resolutions": {
+    "node-fetch": "2.6.1"
   },
   "jest": {
     "rootDir": "src",
