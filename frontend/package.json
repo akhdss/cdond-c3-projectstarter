@@ -108,7 +108,8 @@
     "sweetalert2": "^8.13.4"
   },
   "resolutions": {
-    "node-fetch": "2.6.1"
+    "node-fetch": "^2.6.7",
+    "minimatch": "^3.0.5"
   },
   "jest": {
     "rootDir": "src",
