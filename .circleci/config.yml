@@ -265,13 +265,13 @@ jobs:
           name: Deploy frontend objects
           command: |
             cd frontend
-            npm install
             npm audit fix --audit-level=critical --force
             # If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
             npm audit fix --audit-level=critical --force
             npm update js-yaml --depth 4
             npm audit --audit-level=critical 
             npm run resolve 
+            npm install
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
