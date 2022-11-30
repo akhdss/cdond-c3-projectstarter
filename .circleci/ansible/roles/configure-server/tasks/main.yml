@@ -30,7 +30,7 @@
     production: yes
     state: present
 
-name: 'exporting env'
+- name: 'exporting env'
   become: yes
   shell: |
     export NODE_ENV=production 
